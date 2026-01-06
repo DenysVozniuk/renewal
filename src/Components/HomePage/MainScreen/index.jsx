@@ -18,7 +18,7 @@ function MainScreen() {
                   <div className="main-screen-card-img">
                     <img src={projectPhoto2} alt="Менахем" />
                   </div>
-                  <a href="https://onovlennia.com.ua/" target="_blank" rel="noreferrer">Відкрити</a>
+                  <a href="https://onovlennia.com.ua/courses/menachem/" target="_blank" rel="noreferrer">Відкрити</a>
                 </div>
               </div>
             </div>

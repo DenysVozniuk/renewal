@@ -99,7 +99,7 @@ const OrderCard = (props) => {
     };
 
     const handlerDeleteOrder = (orderId) => {
-        let confirmDelete = confirm("Ви впевнені, що хочете видалити це замовлення");
+        let confirmDelete = confirm("Ви впевнені, що хочете видалити це замовлення?");
         const cartCount = JSON.parse(localStorage.getItem('cartCount'));
         if(confirmDelete){
             let newTotalSum = 0;
@@ -158,7 +158,7 @@ const OrderCard = (props) => {
     return (
         <div className="order-card">
             <div className="order-card-img-container">
-                <img src={currentOrder.image} alt={`order-book-${id}`} />
+                <img src={`/Uploads/${currentOrder.imageFileName}`} alt={`order-book-${id}`} style={{transform: `scale(${currentOrder.scale})`}} />
             </div>
             <div className="order-card-content">
                 <h2>{currentOrder.title}</h2>
