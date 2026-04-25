@@ -99,6 +99,7 @@ const OrderCard = (props) => {
     };
 
     const handlerDeleteOrder = (orderId) => {
+        // eslint-disable-next-line no-restricted-globals
         let confirmDelete = confirm("Ви впевнені, що хочете видалити це замовлення?");
         const cartCount = JSON.parse(localStorage.getItem('cartCount'));
         if(confirmDelete){

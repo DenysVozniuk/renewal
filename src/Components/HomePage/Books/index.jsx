@@ -24,6 +24,8 @@ function buildCardsFromRows(rows, page, perPage) {
         orderPlace: Number.parseInt(book?.order_place ?? 0, 10),
         scale: Number.parseFloat(book?.scale ?? 1),
         cartButtonText: book?.cart_button_text ?? "",
+        cartButtonLink: book?.cart_button_link ?? "",
+
     })).map((card, index) => ({ card, index }));
 }
 
@@ -68,7 +70,7 @@ const Books = () => {
         <div ref={booksSection} id="books" className="books-section">
             <div className="container books-container">
                 <h2>Книги</h2>
-
+                <p className="attention">Важливо! Книги можна замовити в будь-яку точку України (крім окупованих територій), де на момент відправлення працюватиме Нова Пошта. За кордон – не відправляємо.</p>
                 <div
                     ref={cardsTopRef}
                     className={`books-cards-container ${disabled ? "is-disabled" : ""}`}

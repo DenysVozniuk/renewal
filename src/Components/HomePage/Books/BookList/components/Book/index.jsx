@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect, useRef, useContext, useEffect} from "react";
+import React, { useState, useLayoutEffect, useRef, useContext, useEffect } from "react";
 import Context from "../../../../../../Context";
 import { bookSvg, audioSvg, UkraineSvg } from "../../../../../../img/Books";
 import ResizeObserver from 'resize-observer-polyfill';
@@ -29,34 +29,34 @@ const Book = (props) => {
 
     useLayoutEffect(() => {
         const observeElement = (element, setSize, option) => {
-          const resizeObserver = new ResizeObserver((entries) => {
-            for (const entry of entries) {
-                if(option === 'height'){
-                    setSize(Math.ceil(bookCardInfoVerticalPadding + entry.contentRect.height));
+            const resizeObserver = new ResizeObserver((entries) => {
+                for (const entry of entries) {
+                    if (option === 'height') {
+                        setSize(Math.ceil(bookCardInfoVerticalPadding + entry.contentRect.height));
+                    }
+                    else if (option === 'width') {
+                        setSize(Math.ceil(additionalMarginsForHr + entry.contentRect.width));
+                    }
                 }
-                else if(option === 'width'){
-                    setSize(Math.ceil(additionalMarginsForHr + entry.contentRect.width));
-                }
-            }
-        });
-    
-        if (element.current) {
-            resizeObserver.observe(element.current);
-        }
-    
-        return () => {
+            });
+
             if (element.current) {
-              resizeObserver.unobserve(element.current);
+                resizeObserver.observe(element.current);
             }
-          };
+
+            return () => {
+                if (element.current) {
+                    resizeObserver.unobserve(element.current);
+                }
+            };
         };
-    
+
         const cleanup1 = observeElement(bookCardInfoRef, setHeightHr, 'height');
         const cleanup2 = observeElement(bookCardPriceRef, setMarginLeftHr, 'width');
-    
+
         return () => {
-          cleanup1();
-          cleanup2();
+            cleanup1();
+            cleanup2();
         };
     }, [bookCardInfoVerticalPadding]);
 
@@ -73,13 +73,13 @@ const Book = (props) => {
                 setAdditionalMarginsForHr(17)
             }
         };
-    
+
         window.addEventListener('resize', handleResize);
-    
+
         handleResize();
-    
+
         return () => {
-          window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
@@ -87,18 +87,18 @@ const Book = (props) => {
         const orderList = JSON.parse(localStorage.getItem('orderList')) || [];
         const cartCount = JSON.parse(localStorage.getItem('cartCount')) || null;
         let isInOrderList = false;
-        for (let i = 0; i < orderList.length; i++){
+        for (let i = 0; i < orderList.length; i++) {
             orderList[i].id === card.id && (isInOrderList = true);
-            if(isInOrderList) break;
+            if (isInOrderList) break;
         }
         let newOrderList = [];
         let totalSum = 0;
-        if(isInOrderList) {
+        if (isInOrderList) {
             newOrderList = orderList.map((order) => {
-                if(order.id === card.id){
+                if (order.id === card.id) {
                     const newBookCount = order.count + 1;
                     totalSum = calculateTotalSum(order, totalSum, newBookCount, order.copybookCount);
-                    return {...order, count: newBookCount};
+                    return { ...order, count: newBookCount };
                 }
                 else {
                     totalSum = calculateTotalSum(order, totalSum, order.count, order.copybookCount);
@@ -125,7 +125,7 @@ const Book = (props) => {
                 isAudioChecked: false,
                 scale: card.scale
             });
-            if(cartCount === null){
+            if (cartCount === null) {
                 contextValue.setCartCount(1);
                 localStorage.setItem('cartCount', JSON.stringify(1));
             }
@@ -151,18 +151,18 @@ const Book = (props) => {
                                 className="book-card-img-container"
                                 onClick={() => handlerCollapseButtonClick(toggleCollapsibleButton, activeStates[currentIndex].activeState, card.collapsibleContent, currentIndex, 2, currentContentIndex, card)}
                             >
-                                <img style={{transform: `scale(${card.scale})`}} className="book-card-img" src={`/Uploads/${card.imageFileName}`} alt="book" />
+                                <img style={{ transform: `scale(${card.scale})` }} className="book-card-img" src={`/Uploads/${card.imageFileName}`} alt="book" />
                             </div>
                             <h3 className="book-card-text">{card.title}</h3>
                             <div ref={bookCardInfoRef} className="book-card-info">
                                 {
                                     card.audioPrice ? (
                                         <>
-                                            <div ref={bookCardPriceRef} className="book-card-price" style={{marginRight: marginRightBookPrice}}>
+                                            <div ref={bookCardPriceRef} className="book-card-price" style={{ marginRight: marginRightBookPrice }}>
                                                 {bookSvg}
                                                 <p className="book-card-text">{card.bookPrice} грн</p>
                                             </div>
-                                            <hr style={{width: "1px", height: `${heightHr}px`, backgroundColor: "#D9D9D9", position: 'absolute', top: 0, left: `${marginLeftHr}px`}}/>
+                                            <hr style={{ width: "1px", height: `${heightHr}px`, backgroundColor: "#D9D9D9", position: 'absolute', top: 0, left: `${marginLeftHr}px` }} />
                                             <div className="audio-book-card-price">
                                                 {audioSvg}
                                                 {UkraineSvg}
@@ -170,39 +170,54 @@ const Book = (props) => {
                                             </div>
                                         </>
                                     )
-                                    :
-                                    (
-                                        <div ref={bookCardPriceRef} className="book-card-price">
-                                            {bookSvg}
-                                            {
-                                                card.copybookPrice ? (
-                                                    <p className="book-card-text">{card.bookPrice} грн / {card.copybookPrice} грн (зошит)</p>
-                                                ) : (
-                                                    <p className="book-card-text">{card.bookPrice} грн</p>
-                                                )
-                                            }
-                                            
-                                        </div>
-                                    )
+                                        :
+                                        (
+                                            <div ref={bookCardPriceRef} className="book-card-price">
+                                                {bookSvg}
+                                                {
+                                                    card.copybookPrice ? (
+                                                        <p className="book-card-text">{card.bookPrice} грн / {card.copybookPrice} грн (зошит)</p>
+                                                    ) : (
+                                                        <p className="book-card-text">{card.bookPrice} грн</p>
+                                                    )
+                                                }
+
+                                            </div>
+                                        )
                                 }
-                                
+
                             </div>
                         </div>
                         <div className="book-card-buy-buttons">
-                            <button className="book-card-buy-button book-card-buy-button-1 book-card-text" disabled={!card.availability_status} onClick={() => handlerAddOrderToCart()}>
-                                {card.cartButtonText}
-                                {
-                                    !card.availability_status && (
-                                        <div className="tooltip">
-                                            <span className="tooltipText">{card.disabledText}</span>
-                                        </div>
-                                    )
-                                }
-                            </button>
+                            {
+                                card.cartButtonLink ? (
+                                    <a href={card.cartButtonLink} rel="noreferrer" target="_blank" className="book-card-buy-button book-card-buy-button-1 book-card-text" disabled={!card.availability_status}>
+                                        {card.cartButtonText}
+                                        {
+                                            !card.availability_status && (
+                                                <div className="tooltip">
+                                                    <span className="tooltipText">{card.disabledText}</span>
+                                                </div>
+                                            )
+                                        }
+                                    </a>
+                                ) : (
+                                    <button className="book-card-buy-button book-card-buy-button-1 book-card-text" disabled={!card.availability_status} onClick={() => handlerAddOrderToCart()}>
+                                        {card.cartButtonText}
+                                        {
+                                            !card.availability_status && (
+                                                <div className="tooltip">
+                                                    <span className="tooltipText">{card.disabledText}</span>
+                                                </div>
+                                            )
+                                        }
+                                    </button>
+                                )
+                            }
                         </div>
                         <div className="book-card-details-button">
                             <p
-                                style={{color: '#9A9A9A', cursor: 'pointer'}}
+                                style={{ color: '#9A9A9A', cursor: 'pointer' }}
                                 className="book-card-text"
                                 onClick={() => handlerCollapseButtonClick(toggleCollapsibleButton, activeStates[currentIndex].activeState, card.collapsibleContent, currentIndex, 2, currentContentIndex, card)}
                             >

@@ -948,6 +948,12 @@ body.no-scroll {
     margin-bottom: 74px;
 }
 
+.books-section .attention {
+    margin-bottom: 60px;
+    font-size: 25px;
+    text-align: center;
+}
+
 .books-cards-container.is-disabled {
     opacity: 0.6;
     pointer-events: none;

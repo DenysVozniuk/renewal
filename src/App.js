@@ -79,6 +79,7 @@ function App() {
           scale: Number.parseFloat(book?.scale ?? 1),
 
           cartButtonText: book?.cart_button_text ?? "",
+          cartButtonLink: book?.cart_button_link ?? "",
         }));
 
         books.sort((a, b) => b.orderPlace - a.orderPlace);
@@ -135,6 +136,7 @@ function App() {
           orderPlace: Number.parseInt(book.order_place ?? 0, 10),
           scale: Number.parseFloat(book.scale ?? 1),
           cartButtonText: book.cart_button_text ?? "",
+          cartButtonLink: book?.cart_button_link ?? "",
         }));
 
         const list = books.map((card, index) => ({ card, index }));
