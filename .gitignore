@@ -13,7 +13,10 @@
 /Build_versions
 
 # server
-/Renewal server additional.zip
+/renewal_server_additional.zip
+
+# db
+/renewal_db.zip
 
 # misc
 .DS_Store
