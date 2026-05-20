@@ -7,26 +7,26 @@ import { useServerPagination } from "../../../Hooks/useServerPagination";
 
 function buildCardsFromRows(rows, page, perPage) {
     return rows.map((book, index) => ({
-        id: (page - 1) * perPage + (index + 1),
-        imageFileName: book.image_file_name ?? "",
-        title: book?.title ?? "",
-        bookPrice: Number.parseFloat(book?.book_price ?? 0),
-        copybookPrice: Number.parseFloat(book?.copybook_price ?? 0),
-        audioPrice: Number.parseFloat(book?.audio_price ?? 0),
-        collapsibleContent: {
-            collapsibleInfoText1: book?.printed_text ?? "",
-            collapsibleInfoText2: book?.availability_text ?? "",
-            collapsibleInfoText3: book?.audio_text ?? "",
-            collapsibleText: book?.description ?? "",
-        },
-        availability_status: Boolean(Number.parseInt(book?.availability_status ?? 0, 10)),
-        disabledText: book?.disabled_text ?? "",
-        orderPlace: Number.parseInt(book?.order_place ?? 0, 10),
-        scale: Number.parseFloat(book?.scale ?? 1),
-        cartButtonText: book?.cart_button_text ?? "",
-        cartButtonLink: book?.cart_button_link ?? "",
-
-    })).map((card, index) => ({ card, index }));
+            id: (page - 1) * perPage + (index + 1),
+            imageFileName: book.image_file_name ?? "",
+            title: book?.title ?? "",
+            bookPrice: Number.parseFloat(book?.book_price ?? 0),
+            copybookPrice: Number.parseFloat(book?.copybook_price ?? 0),
+            audioPrice: Number.parseFloat(book?.audio_price ?? 0),
+            collapsibleContent: {
+                collapsibleInfoText1: book?.printed_text ?? "",
+                collapsibleInfoText2: book?.availability_text ?? "",
+                collapsibleInfoText3: book?.audio_text ?? "",
+                collapsibleText: book?.description ?? "",
+            },
+            availability_status: Boolean(Number.parseInt(book?.availability_status ?? 0, 10)),
+            disabledText: book?.disabled_text ?? "",
+            orderPlace: Number.parseInt(book?.order_place ?? 0, 10),
+            scale: Number.parseFloat(book?.scale ?? 1),
+            cartButtonText: book?.cart_button_text ?? "",
+            cartButtonLink: book?.cart_button_link ?? "",
+        }))
+        .map((card, index) => ({ card, index }));
 }
 
 const Books = () => {

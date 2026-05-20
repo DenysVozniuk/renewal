@@ -12,6 +12,9 @@
 /build
 /Build_versions
 
+# server
+/Renewal server additional.zip
+
 # misc
 .DS_Store
 .env.local
